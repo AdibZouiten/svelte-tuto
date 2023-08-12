@@ -1,14 +1,11 @@
 <script lang="ts">
-  let name: string = "adib zouiten";
-  let showAdminText: boolean = false;
-  interface user {
-    id: number;
-    name: string;
-    city: string;
-  }
-  interface users extends Array<user> {}
+  import FeedbackList from "./components/FeedbackList.svelte";
+  import type { Users } from "./types/users";
 
-  const usersData: users = [
+  let name: string = "adib";
+  let showAdminText: boolean = false;
+
+  const usersData: Users = [
     {
       id: 1,
       name: "Adib zouiten",
@@ -41,29 +38,13 @@
   >
   {#if showAdminText}
     <h3>Hey don't tell any one your the admin now 😎</h3>
-    <table class="userDataTable">
-      <thead>
-        <th>ID</th>
-        <th>Name</th>
-        <th>City</th>
-      </thead>
-      <tbody>
-        {#each usersData as user (user.id)}
-          <tr>
-            <td>{user.id}</td>
-            <td>{user.name} </td>
-            <td>{user.city}</td>
-          </tr>
-        {/each}
-      </tbody>
-    </table>
+    <FeedbackList users={usersData} />
   {:else}
     <h3>Nothing to see here 🙊</h3>
+    <FeedbackList users={usersData} />
   {/if}
 </main>
 
 <style>
-  .userDataTable{
-    width:100%;
-  }
+  
 </style>
