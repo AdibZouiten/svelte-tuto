@@ -5,7 +5,7 @@
   let name: string = "adib";
   let showAdminText: boolean = false;
 
-  const usersData: Users = [
+  export const usersData: Users = [
     {
       id: 1,
       name: "Adib zouiten",
@@ -26,6 +26,15 @@
       showAdminText = true;
     }
   }
+
+  function DeleteUser(e): void {
+    let userID: number = e.detail;
+    let filterUserData = usersData.filter((user) => user.id !== userID);
+    console.log(filterUserData);
+
+    usersData.length = 0;
+    usersData.push(...filterUserData);
+  }
 </script>
 
 <main>
@@ -38,13 +47,12 @@
   >
   {#if showAdminText}
     <h3>Hey don't tell any one your the admin now 😎</h3>
-    <FeedbackList users={usersData} />
+    <FeedbackList users={usersData} on:DeleteUser={DeleteUser} />
   {:else}
     <h3>Nothing to see here 🙊</h3>
-    <FeedbackList users={usersData} />
+    <FeedbackList users={usersData} on:DeleteUser={DeleteUser} />
   {/if}
 </main>
 
 <style>
-  
 </style>

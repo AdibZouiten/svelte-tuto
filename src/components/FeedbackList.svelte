@@ -12,7 +12,7 @@
   </thead>
   <tbody>
     {#each users as user (user.id)}
-      <FeedbackItem {user} />
+      <FeedbackItem {user} on:DeleteUser />
     {/each}
   </tbody>
 </table>
