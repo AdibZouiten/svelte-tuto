@@ -1,8 +1,9 @@
 <script lang="ts">
+  import FeedbackAdd from "./components/FeedbackAdd.svelte";
   import FeedbackList from "./components/FeedbackList.svelte";
-  import type { Users } from "./types/users";
+  import type { User, Users } from "./types/users";
 
-  let name: string = "adib";
+  let name: string = "adib zouiten";
   let showAdminText: boolean = false;
 
   export const usersData: Users = [
@@ -10,13 +11,32 @@
       id: 1,
       name: "Adib zouiten",
       city: "rabat",
+      age: 19,
     },
     {
       id: 2,
       name: "Omar zouiten",
       city: "rabat",
+      age: 56,
+    },
+    {
+      id: 3,
+      name: "samia zouiten",
+      city: "rabat",
+      age: 21,
+    },
+    {
+      id: 4,
+      name: "ihsaan zouiten",
+      city: "rabat",
+      age: 17,
     },
   ];
+
+  $: count = usersData.length;
+  $: total = usersData.reduce((total, user) => total + user.age, 0);
+  $: avg = total / count;
+  $: data = usersData
 
   function ChangeName(): undefined {
     showAdminText = false;
@@ -35,10 +55,19 @@
     usersData.length = 0;
     usersData.push(...filterUserData);
   }
-</script>
+  function SaveUser(e): void {
+    let newUser:User = e.detail
+    usersData.push(newUser);
+    console.log(usersData);
+    
+    
+  }
+</script> 
 
 <main>
   <h1 class="logo">Hello {name}!</h1>
+  <h3>total users is {count}</h3>
+  <h3>avg user age is {avg}</h3>
   <button
     type="button"
     on:click={() => {
@@ -52,6 +81,7 @@
     <h3>Nothing to see here 🙊</h3>
     <FeedbackList users={usersData} on:DeleteUser={DeleteUser} />
   {/if}
+  <FeedbackAdd  on:add={SaveUser}/>
 </main>
 
 <style>
